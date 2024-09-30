@@ -53,11 +53,6 @@
 			path = "image-grayscaleTests";
 			sourceTree = "<group>";
 		};
-		662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "image-grayscaleUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +85,6 @@
 			children = (
 				662A1C9D2CA939F60069D34E /* image-grayscale */,
 				662A1CB42CA939FA0069D34E /* image-grayscaleTests */,
-				662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */,
 				662A1C9C2CA939F60069D34E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,9 +159,6 @@
 			);
 			dependencies = (
 				662A1CBD2CA939FA0069D34E /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */,
 			);
 			name = "image-grayscaleUITests";
 			packageProductDependencies = (
