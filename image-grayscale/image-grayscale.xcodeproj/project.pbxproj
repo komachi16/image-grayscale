@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 662A1C9A2CA939F60069D34E;
 			remoteInfo = "image-grayscale";
 		};
-		662A1CBC2CA939FA0069D34E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 662A1C932CA939F60069D34E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 662A1C9A2CA939F60069D34E;
-			remoteInfo = "image-grayscale";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		662A1C9B2CA939F60069D34E /* image-grayscale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "image-grayscale.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "image-grayscaleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "image-grayscaleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -70,13 +62,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		662A1CB82CA939FA0069D34E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -94,7 +79,6 @@
 			children = (
 				662A1C9B2CA939F60069D34E /* image-grayscale.app */,
 				662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */,
-				662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,26 +131,6 @@
 			productReference = 662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		662A1CBA2CA939FA0069D34E /* image-grayscaleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 662A1CCC2CA939FA0069D34E /* Build configuration list for PBXNativeTarget "image-grayscaleUITests" */;
-			buildPhases = (
-				662A1CB72CA939FA0069D34E /* Sources */,
-				662A1CB82CA939FA0069D34E /* Frameworks */,
-				662A1CB92CA939FA0069D34E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				662A1CBD2CA939FA0069D34E /* PBXTargetDependency */,
-			);
-			name = "image-grayscaleUITests";
-			packageProductDependencies = (
-			);
-			productName = "image-grayscaleUITests";
-			productReference = 662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -181,10 +145,6 @@
 						CreatedOnToolsVersion = 16.0;
 					};
 					662A1CB02CA939FA0069D34E = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = 662A1C9A2CA939F60069D34E;
-					};
-					662A1CBA2CA939FA0069D34E = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 662A1C9A2CA939F60069D34E;
 					};
@@ -210,7 +170,6 @@
 			targets = (
 				662A1C9A2CA939F60069D34E /* image-grayscale */,
 				662A1CB02CA939FA0069D34E /* image-grayscaleTests */,
-				662A1CBA2CA939FA0069D34E /* image-grayscaleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -224,13 +183,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		662A1CAF2CA939FA0069D34E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		662A1CB92CA939FA0069D34E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,13 +206,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		662A1CB72CA939FA0069D34E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -268,11 +213,6 @@
 			isa = PBXTargetDependency;
 			target = 662A1C9A2CA939F60069D34E /* image-grayscale */;
 			targetProxy = 662A1CB22CA939FA0069D34E /* PBXContainerItemProxy */;
-		};
-		662A1CBD2CA939FA0069D34E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 662A1C9A2CA939F60069D34E /* image-grayscale */;
-			targetProxy = 662A1CBC2CA939FA0069D34E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -488,38 +428,6 @@
 			};
 			name = Release;
 		};
-		662A1CCD2CA939FA0069D34E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscaleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "image-grayscale";
-			};
-			name = Debug;
-		};
-		662A1CCE2CA939FA0069D34E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscaleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "image-grayscale";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -546,15 +454,6 @@
 			buildConfigurations = (
 				662A1CCA2CA939FA0069D34E /* Debug */,
 				662A1CCB2CA939FA0069D34E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		662A1CCC2CA939FA0069D34E /* Build configuration list for PBXNativeTarget "image-grayscaleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				662A1CCD2CA939FA0069D34E /* Debug */,
-				662A1CCE2CA939FA0069D34E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
