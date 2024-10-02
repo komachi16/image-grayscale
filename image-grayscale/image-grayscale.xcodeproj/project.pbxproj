@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		667F94FC2CAD28B20052BEE1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 667F94FB2CAD28B20052BEE1 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		662A1CB22CA939FA0069D34E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667F94FC2CAD28B20052BEE1 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +109,7 @@
 			);
 			name = "image-grayscale";
 			packageProductDependencies = (
+				667F94FB2CAD28B20052BEE1 /* SnapKit */,
 			);
 			productName = "image-grayscale";
 			productReference = 662A1C9B2CA939F60069D34E /* image-grayscale.app */;
@@ -502,6 +508,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 662A1CE52CAA7DED0069D34E /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		667F94FB2CAD28B20052BEE1 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66EC55192CAD0C94006E31C2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
