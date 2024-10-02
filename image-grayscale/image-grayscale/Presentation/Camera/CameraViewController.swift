@@ -135,6 +135,25 @@ class CameraViewController: UIViewController {
             }
         }
     }
+
+    private func applyMonochromeFilter(to image: UIImage) -> UIImage {
+        guard let ciImage = CIImage(image: image),
+              let filter = CIFilter(name: "CIColorMonochrome")
+        else {
+            return UIImage()
+        }
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(CIColor(red: 0.0, green: 0.0, blue: 0.0), forKey: kCIInputColorKey)
+        filter.setValue(1.0, forKey: kCIInputIntensityKey)
+
+        let context = CIContext()
+        if let outputImage = filter.outputImage,
+           let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
+            return UIImage(cgImage: cgImage)
+        }
+        return image
+    }
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -143,9 +162,11 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?
     ) {
-        guard let imageData = photo.fileDataRepresentation() else { return }
-        let image = UIImage(data: imageData)
-        // TODO: モノクロ変換機能を追加
+        guard let imageData = photo.fileDataRepresentation(),
+              let image = UIImage(data: imageData)
+        else { return }
+
+        let monochromeImage = applyMonochromeFilter(to: image)
 
         // TODO: 結果画面に遷移
     }
