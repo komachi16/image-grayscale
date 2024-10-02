@@ -1,10 +1,11 @@
 disabled_rules: # rule identifiers to exclude from running
+  - trailing_whitespace
 
 opt_in_rules: # some rules are only opt-in
   - attributes
   - closure_end_indentation
   - closure_spacing
-  - conditional_returns_on_newline
+#  - conditional_returns_on_newline
   - empty_count
   - explicit_init
   # Use type inference
