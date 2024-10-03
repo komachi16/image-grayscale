@@ -49,7 +49,8 @@ class ResultViewController: UIViewController {
         resultImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
-            $0.top.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
         }
 
         bottomView.snp.makeConstraints {

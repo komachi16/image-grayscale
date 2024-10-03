@@ -93,7 +93,8 @@ class CameraViewController: UIViewController {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = view.layer.bounds
         previewLayer?.videoGravity = .resizeAspectFill
-        
+        previewLayer?.connection?.videoOrientation = .portrait
+
         if let previewLayer = previewLayer {
             view.layer.addSublayer(previewLayer)
         }
@@ -154,6 +155,19 @@ class CameraViewController: UIViewController {
         }
         return image
     }
+
+    private func fixImageOrientation(_ image: UIImage) -> UIImage {
+        if image.imageOrientation == .up {
+            return image
+        }
+
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return normalizedImage ?? image
+    }
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -166,7 +180,8 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
               let image = UIImage(data: imageData)
         else { return }
 
-        let monochromeImage = applyMonochromeFilter(to: image)
+        let fixedImage = fixImageOrientation(image)
+        let monochromeImage = applyMonochromeFilter(to: fixedImage)
 
         let resultVC = ResultViewController()
         resultVC.capturedImage = monochromeImage
