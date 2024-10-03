@@ -51,6 +51,12 @@ class CameraViewController: UIViewController {
         resetCamera()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resetCamera()
+        setupCamera()
+    }
+
     private func setupLayout() {
         view.addSubview(shutterButton)
         view.addSubview(countdownLabel)
@@ -100,9 +106,12 @@ class CameraViewController: UIViewController {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = view.layer.bounds
         previewLayer?.videoGravity = .resizeAspectFill
-        
+
         guard let previewLayer else { return }
         view.layer.addSublayer(previewLayer)
+
+        view.bringSubviewToFront(shutterButton)
+        view.bringSubviewToFront(countdownLabel)
     }
 
     private func resetCamera() {
