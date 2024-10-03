@@ -36,6 +36,12 @@ class CameraViewController: UIViewController {
         return label
     }()
 
+    private let loadingView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+
     private var isCountingDown: Bool {
         !countdownLabel.isHidden
     }
@@ -60,6 +66,7 @@ class CameraViewController: UIViewController {
     private func setupLayout() {
         view.addSubview(shutterButton)
         view.addSubview(countdownLabel)
+        view.addSubview(loadingView)
 
         shutterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -71,6 +78,8 @@ class CameraViewController: UIViewController {
             $0.centerX.centerY.equalToSuperview()
             $0.height.equalTo(64)
         }
+
+        loadingView.center = view.center
     }
 
     private func setupCamera() {
@@ -117,6 +126,7 @@ class CameraViewController: UIViewController {
 
         view.bringSubviewToFront(shutterButton)
         view.bringSubviewToFront(countdownLabel)
+        view.bringSubviewToFront(loadingView)
     }
 
     private func resetCamera() {
@@ -201,10 +211,13 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
               let image = UIImage(data: imageData)
         else { return }
 
+        loadingView.startAnimating()
+
         let fixedImage = fixImageOrientation(image)
         let monochromeImage = applyMonochromeFilter(to: fixedImage)
 
         Task { @MainActor in
+            loadingView.stopAnimating()
             let resultVC = ResultViewController()
             resultVC.capturedImage = monochromeImage
             navigationController?.pushViewController(resultVC, animated: true)
