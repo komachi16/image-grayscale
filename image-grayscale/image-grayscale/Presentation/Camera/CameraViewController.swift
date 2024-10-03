@@ -183,9 +183,10 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         let fixedImage = fixImageOrientation(image)
         let monochromeImage = applyMonochromeFilter(to: fixedImage)
 
-        let resultVC = ResultViewController()
-        resultVC.capturedImage = monochromeImage
-        navigationController?.navigationItem.setHidesBackButton(true, animated: false)
-        navigationController?.pushViewController(resultVC, animated: true)
+        Task { @MainActor in
+            let resultVC = ResultViewController()
+            resultVC.capturedImage = monochromeImage
+            navigationController?.pushViewController(resultVC, animated: true)
+        }
     }
 }
