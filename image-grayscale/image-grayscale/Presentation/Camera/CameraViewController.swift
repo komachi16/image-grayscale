@@ -87,8 +87,10 @@ class CameraViewController: UIViewController {
     private func setupDeviceInput(device: AVCaptureDevice) {
         do {
             deviceInput = try AVCaptureDeviceInput(device: device)
-            if captureSession.canAddInput(deviceInput!) {
-                captureSession.addInput(deviceInput!)
+
+            guard let deviceInput else { return }
+            if captureSession.canAddInput(deviceInput) {
+                captureSession.addInput(deviceInput)
             }
         } catch {
             print("Error setting up camera input: \(error)")
