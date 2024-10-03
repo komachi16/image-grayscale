@@ -14,8 +14,7 @@ class CameraViewController: UIViewController {
     private let captureSession = AVCaptureSession()
 
     private var deviceInput: AVCaptureDeviceInput?
-    private var photoOutput = AVCapturePhotoOutput()
-
+    private var photoOutput: AVCapturePhotoOutput?
     private var previewLayer: AVCaptureVideoPreviewLayer?
 
     private lazy var shutterButton: UIButton = {
@@ -36,6 +35,10 @@ class CameraViewController: UIViewController {
         label.font = .systemFont(ofSize: 30)
         return label
     }()
+
+    private var isCountingDown: Bool {
+        !countdownLabel.isHidden
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,41 +68,41 @@ class CameraViewController: UIViewController {
     }
 
     private func setupCamera() {
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+            print("No camera available.")
+            return
+        }
+        setupDeviceInput(device: captureDevice)
+        setupPhotoOutput()
+        setupPreviewLayer()
+        captureSession.startRunning()
+    }
 
+    private func setupDeviceInput(device: AVCaptureDevice) {
         do {
-            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-        } catch let error as NSError {
+            deviceInput = try AVCaptureDeviceInput(device: device)
+            if captureSession.canAddInput(deviceInput!) {
+                captureSession.addInput(deviceInput!)
+            }
+        } catch {
             print("Error setting up camera input: \(error)")
-            return
         }
+    }
 
-        guard let deviceInput = deviceInput else { return }
-
-        if captureSession.canAddInput(deviceInput) {
-            captureSession.addInput(deviceInput)
-        } else {
-            return
-        }
-
+    private func setupPhotoOutput() {
         photoOutput = AVCapturePhotoOutput()
-
-        if captureSession.canAddOutput(photoOutput) {
+        if let photoOutput = photoOutput, captureSession.canAddOutput(photoOutput) {
             captureSession.addOutput(photoOutput)
-        } else {
-            return
         }
+    }
 
+    private func setupPreviewLayer() {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer?.frame = view.layer.bounds
         previewLayer?.videoGravity = .resizeAspectFill
-        previewLayer?.connection?.videoOrientation = .portrait
-
-        if let previewLayer = previewLayer {
-            view.layer.addSublayer(previewLayer)
-        }
-
-        captureSession.startRunning()
+        
+        guard let previewLayer else { return }
+        view.layer.addSublayer(previewLayer)
     }
 
     private func resetCamera() {
@@ -107,17 +110,21 @@ class CameraViewController: UIViewController {
         if let deviceInput = deviceInput {
             captureSession.removeInput(deviceInput)
         }
+        captureSession.outputs.forEach { output in
+            captureSession.removeOutput(output)
+        }
         previewLayer?.removeFromSuperlayer()
         previewLayer = nil
     }
 
     private func takePhoto() {
         let settings = AVCapturePhotoSettings()
-        photoOutput.capturePhoto(with: settings, delegate: self)
+        photoOutput?.capturePhoto(with: settings, delegate: self)
     }
 
     @objc
     private func shutterButtonTapped(_ sender: UIButton) {
+        guard !isCountingDown else { return }
         countdownLabel.isHidden = false
         startCountdown()
     }
