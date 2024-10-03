@@ -81,7 +81,10 @@ class CameraViewController: UIViewController {
         setupDeviceInput(device: captureDevice)
         setupPhotoOutput()
         setupPreviewLayer()
-        captureSession.startRunning()
+
+        Task.detached { [weak self] in
+            await self?.captureSession.startRunning()
+        }
     }
 
     private func setupDeviceInput(device: AVCaptureDevice) {
