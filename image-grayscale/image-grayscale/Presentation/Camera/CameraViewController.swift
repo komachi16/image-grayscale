@@ -168,6 +168,9 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         let monochromeImage = applyMonochromeFilter(to: image)
 
-        // TODO: 結果画面に遷移
+        let resultVC = ResultViewController()
+        resultVC.capturedImage = monochromeImage
+        navigationController?.navigationItem.setHidesBackButton(true, animated: false)
+        navigationController?.pushViewController(resultVC, animated: true)
     }
 }

@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
         window?.rootViewController = UINavigationController(rootViewController: CameraViewController())
         window?.makeKeyAndVisible()
 
