@@ -37,6 +37,7 @@ class ResultViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         resultImageView.image = capturedImage
         setupLayout()
     }
