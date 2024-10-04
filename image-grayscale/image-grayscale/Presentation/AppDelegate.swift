@@ -51,7 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let closeAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         alert.addAction(settingsAction)
         alert.addAction(closeAction)
-        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+
+        // @MainActor が期待通り動作しないため DispatchQueue を使用
+        DispatchQueue.main.async {
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
 
     private func openAppSettings() {
