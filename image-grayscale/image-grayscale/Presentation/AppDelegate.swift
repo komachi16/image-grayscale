@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = UINavigationController(rootViewController: CameraViewController())
         window?.makeKeyAndVisible()
 
+        requestPhotoLibraryAccess()
+
         return true
+    }
+
+    private func requestPhotoLibraryAccess() {
+        guard PHPhotoLibrary.authorizationStatus() != .authorized else {
+            return
+        }
+
+        PHPhotoLibrary.requestAuthorization(for: .addOnly) { [weak self] status in
+           guard status != .authorized else { return }
+            self?.showPhotoLibraryAccessAlert()
+        }
+    }
+
+    private func showPhotoLibraryAccessAlert() {
+        let alert = UIAlertController(
+            title: "写真ライブラリへのアクセス",
+            message: "写真ライブラリへのアクセスを許可してください。",
+            preferredStyle: .alert
+        )
+        let settingsAction = UIAlertAction(title: "設定", style: .default) { [weak self] _ in
+            self?.openAppSettings()
+        }
+        let closeAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+        alert.addAction(settingsAction)
+        alert.addAction(closeAction)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+
+    private func openAppSettings() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
     }
 }
