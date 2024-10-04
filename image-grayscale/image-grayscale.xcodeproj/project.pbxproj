@@ -6,15 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		667F94FC2CAD28B20052BEE1 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 667F94FB2CAD28B20052BEE1 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		662A1CB22CA939FA0069D34E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 662A1C932CA939F60069D34E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 662A1C9A2CA939F60069D34E;
-			remoteInfo = "image-grayscale";
-		};
-		662A1CBC2CA939FA0069D34E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 662A1C932CA939F60069D34E /* Project object */;
 			proxyType = 1;
@@ -26,7 +23,6 @@
 /* Begin PBXFileReference section */
 		662A1C9B2CA939F60069D34E /* image-grayscale.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "image-grayscale.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "image-grayscaleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "image-grayscaleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -53,11 +49,6 @@
 			path = "image-grayscaleTests";
 			sourceTree = "<group>";
 		};
-		662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "image-grayscaleUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,17 +56,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667F94FC2CAD28B20052BEE1 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		662A1CAE2CA939FA0069D34E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		662A1CB82CA939FA0069D34E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -90,7 +75,6 @@
 			children = (
 				662A1C9D2CA939F60069D34E /* image-grayscale */,
 				662A1CB42CA939FA0069D34E /* image-grayscaleTests */,
-				662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */,
 				662A1C9C2CA939F60069D34E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,7 +84,6 @@
 			children = (
 				662A1C9B2CA939F60069D34E /* image-grayscale.app */,
 				662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */,
-				662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,12 +102,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				662A1CE82CAA81900069D34E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				662A1C9D2CA939F60069D34E /* image-grayscale */,
 			);
 			name = "image-grayscale";
 			packageProductDependencies = (
+				667F94FB2CAD28B20052BEE1 /* SnapKit */,
 			);
 			productName = "image-grayscale";
 			productReference = 662A1C9B2CA939F60069D34E /* image-grayscale.app */;
@@ -153,29 +138,6 @@
 			productReference = 662A1CB12CA939FA0069D34E /* image-grayscaleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		662A1CBA2CA939FA0069D34E /* image-grayscaleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 662A1CCC2CA939FA0069D34E /* Build configuration list for PBXNativeTarget "image-grayscaleUITests" */;
-			buildPhases = (
-				662A1CB72CA939FA0069D34E /* Sources */,
-				662A1CB82CA939FA0069D34E /* Frameworks */,
-				662A1CB92CA939FA0069D34E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				662A1CBD2CA939FA0069D34E /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				662A1CBE2CA939FA0069D34E /* image-grayscaleUITests */,
-			);
-			name = "image-grayscaleUITests";
-			packageProductDependencies = (
-			);
-			productName = "image-grayscaleUITests";
-			productReference = 662A1CBB2CA939FA0069D34E /* image-grayscaleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -193,10 +155,6 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 662A1C9A2CA939F60069D34E;
 					};
-					662A1CBA2CA939FA0069D34E = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = 662A1C9A2CA939F60069D34E;
-					};
 				};
 			};
 			buildConfigurationList = 662A1C962CA939F60069D34E /* Build configuration list for PBXProject "image-grayscale" */;
@@ -208,6 +166,11 @@
 			);
 			mainGroup = 662A1C922CA939F60069D34E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				662A1CE52CAA7DED0069D34E /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				662A1CE62CAA807E0069D34E /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+				66EC55192CAD0C94006E31C2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 662A1C9C2CA939F60069D34E /* Products */;
 			projectDirPath = "";
@@ -215,7 +178,6 @@
 			targets = (
 				662A1C9A2CA939F60069D34E /* image-grayscale */,
 				662A1CB02CA939FA0069D34E /* image-grayscaleTests */,
-				662A1CBA2CA939FA0069D34E /* image-grayscaleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,13 +191,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		662A1CAF2CA939FA0069D34E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		662A1CB92CA939FA0069D34E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -259,13 +214,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		662A1CB72CA939FA0069D34E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -274,10 +222,9 @@
 			target = 662A1C9A2CA939F60069D34E /* image-grayscale */;
 			targetProxy = 662A1CB22CA939FA0069D34E /* PBXContainerItemProxy */;
 		};
-		662A1CBD2CA939FA0069D34E /* PBXTargetDependency */ = {
+		662A1CE82CAA81900069D34E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 662A1C9A2CA939F60069D34E /* image-grayscale */;
-			targetProxy = 662A1CBC2CA939FA0069D34E /* PBXContainerItemProxy */;
+			productRef = 662A1CE72CAA81900069D34E /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -287,15 +234,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XKQLNZ44A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "image-grayscale/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +252,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscale";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -314,15 +264,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XKQLNZ44A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "image-grayscale/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,6 +282,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscale";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -491,38 +444,6 @@
 			};
 			name = Release;
 		};
-		662A1CCD2CA939FA0069D34E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscaleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "image-grayscale";
-			};
-			name = Debug;
-		};
-		662A1CCE2CA939FA0069D34E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.komachi16.image-grayscaleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "image-grayscale";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -553,16 +474,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		662A1CCC2CA939FA0069D34E /* Build configuration list for PBXNativeTarget "image-grayscaleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				662A1CCD2CA939FA0069D34E /* Debug */,
-				662A1CCE2CA939FA0069D34E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		662A1CE52CAA7DED0069D34E /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
+		662A1CE62CAA807E0069D34E /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.5;
+			};
+		};
+		66EC55192CAD0C94006E31C2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		662A1CE72CAA81900069D34E /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 662A1CE52CAA7DED0069D34E /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		667F94FB2CAD28B20052BEE1 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66EC55192CAD0C94006E31C2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 662A1C932CA939F60069D34E /* Project object */;
 }
