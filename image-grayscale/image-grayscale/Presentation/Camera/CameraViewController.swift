@@ -199,6 +199,19 @@ class CameraViewController: UIViewController {
 
         return normalizedImage ?? image
     }
+
+    private func saveImageToCameraRoll(_ image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+
+    @objc
+    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("Error saving image: \(error.localizedDescription)")
+        } else {
+            print("Image saved successfully")
+        }
+    }
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -215,6 +228,8 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         let fixedImage = fixImageOrientation(image)
         let monochromeImage = applyMonochromeFilter(to: fixedImage)
+
+        saveImageToCameraRoll(monochromeImage)
 
         Task { @MainActor in
             loadingView.stopAnimating()
