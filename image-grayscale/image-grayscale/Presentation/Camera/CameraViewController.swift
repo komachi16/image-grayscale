@@ -168,38 +168,6 @@ class CameraViewController: UIViewController {
         }
     }
 
-    private func applyMonochromeFilter(to image: UIImage) -> UIImage {
-        guard let ciImage = CIImage(image: image),
-              let filter = CIFilter(name: "CIColorMonochrome")
-        else {
-            return UIImage()
-        }
-        
-        filter.setValue(ciImage, forKey: kCIInputImageKey)
-        filter.setValue(CIColor(red: 0.0, green: 0.0, blue: 0.0), forKey: kCIInputColorKey)
-        filter.setValue(1.0, forKey: kCIInputIntensityKey)
-
-        let context = CIContext()
-        if let outputImage = filter.outputImage,
-           let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-            return UIImage(cgImage: cgImage)
-        }
-        return image
-    }
-
-    private func fixImageOrientation(_ image: UIImage) -> UIImage {
-        if image.imageOrientation == .up {
-            return image
-        }
-
-        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        image.draw(in: CGRect(origin: .zero, size: image.size))
-        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return normalizedImage ?? image
-    }
-
     private func saveImageToCameraRoll(_ image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
@@ -226,8 +194,8 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         loadingView.startAnimating()
 
-        let fixedImage = fixImageOrientation(image)
-        let monochromeImage = applyMonochromeFilter(to: fixedImage)
+        let fixedImage = ImageUtil.fixImageOrientation(image)
+        let monochromeImage = ImageUtil.applyMonochromeFilter(to: fixedImage)
 
         saveImageToCameraRoll(monochromeImage)
 
