@@ -11,10 +11,7 @@ import SnapKit
 
 class CameraViewController: UIViewController {
 
-    private let captureSession = AVCaptureSession()
-
-    private var deviceInput: AVCaptureDeviceInput?
-    private var photoOutput: AVCapturePhotoOutput?
+    private let cameraManager = CameraManager()
     private var previewLayer: AVCaptureVideoPreviewLayer?
 
     private lazy var shutterButton: UIButton = {
@@ -82,46 +79,19 @@ class CameraViewController: UIViewController {
         loadingView.center = view.center
     }
 
+
     private func setupCamera() {
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
-            print("No camera available.")
-            return
-        }
-        setupDeviceInput(device: captureDevice)
-        setupPhotoOutput()
+        cameraManager.setupSession()
         setupPreviewLayer()
 
-        Task.detached { [weak self] in
-            await self?.captureSession.startRunning()
-        }
-    }
-
-    private func setupDeviceInput(device: AVCaptureDevice) {
-        do {
-            deviceInput = try AVCaptureDeviceInput(device: device)
-
-            guard let deviceInput else { return }
-            if captureSession.canAddInput(deviceInput) {
-                captureSession.addInput(deviceInput)
-            }
-        } catch {
-            print("Error setting up camera input: \(error)")
-        }
-    }
-
-    private func setupPhotoOutput() {
-        photoOutput = AVCapturePhotoOutput()
-        if let photoOutput = photoOutput, captureSession.canAddOutput(photoOutput) {
-            captureSession.addOutput(photoOutput)
-        }
+        cameraManager.captureSessionStart()
     }
 
     private func setupPreviewLayer() {
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer?.frame = view.layer.bounds
-        previewLayer?.videoGravity = .resizeAspectFill
+        let previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
+        previewLayer.frame = UIScreen.main.bounds
+        previewLayer.videoGravity = .resizeAspectFill
 
-        guard let previewLayer else { return }
         view.layer.addSublayer(previewLayer)
 
         view.bringSubviewToFront(shutterButton)
@@ -130,20 +100,13 @@ class CameraViewController: UIViewController {
     }
 
     private func resetCamera() {
-        captureSession.stopRunning()
-        if let deviceInput = deviceInput {
-            captureSession.removeInput(deviceInput)
-        }
-        captureSession.outputs.forEach { output in
-            captureSession.removeOutput(output)
-        }
+        cameraManager.stopCamera()
         previewLayer?.removeFromSuperlayer()
         previewLayer = nil
     }
 
     private func takePhoto() {
-        let settings = AVCapturePhotoSettings()
-        photoOutput?.capturePhoto(with: settings, delegate: self)
+        cameraManager.takePhoto(delegate: self)
     }
 
     @objc
