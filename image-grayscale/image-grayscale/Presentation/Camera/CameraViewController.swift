@@ -10,6 +10,9 @@ import AVFoundation
 import SnapKit
 
 class CameraViewController: UIViewController {
+    struct Const {
+        static let circleViewHeight = CGFloat(96)
+    }
 
     private let cameraManager = CameraManager()
     private var previewLayer: AVCaptureVideoPreviewLayer?
@@ -26,9 +29,18 @@ class CameraViewController: UIViewController {
         return button
     }()
 
+    private let countDownCircleView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        view.backgroundColor = .white
+        view.alpha = 0.2
+        view.layer.cornerRadius = Const.circleViewHeight / 2
+        view.clipsToBounds = true
+        return view
+    }()
+
     private let countdownLabel: UILabel = {
         let label = UILabel()
-        label.isHidden = true
         label.font = .systemFont(ofSize: 30)
         return label
     }()
@@ -40,7 +52,7 @@ class CameraViewController: UIViewController {
     }()
 
     private var isCountingDown: Bool {
-        !countdownLabel.isHidden
+        !countDownCircleView.isHidden
     }
 
     override func viewDidLoad() {
@@ -62,13 +74,21 @@ class CameraViewController: UIViewController {
 
     private func setupLayout() {
         view.addSubview(shutterButton)
-        view.addSubview(countdownLabel)
+
+        view.addSubview(countDownCircleView)
+        countDownCircleView.addSubview(countdownLabel)
+
         view.addSubview(loadingView)
 
         shutterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-40)
             $0.width.height.equalTo(72)
+        }
+
+        countDownCircleView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.height.width.equalTo(Const.circleViewHeight)
         }
 
         countdownLabel.snp.makeConstraints {
@@ -78,7 +98,6 @@ class CameraViewController: UIViewController {
 
         loadingView.center = view.center
     }
-
 
     private func setupCamera() {
         cameraManager.setupSession()
@@ -95,7 +114,7 @@ class CameraViewController: UIViewController {
         view.layer.addSublayer(previewLayer)
 
         view.bringSubviewToFront(shutterButton)
-        view.bringSubviewToFront(countdownLabel)
+        view.bringSubviewToFront(countDownCircleView)
         view.bringSubviewToFront(loadingView)
     }
 
@@ -112,7 +131,7 @@ class CameraViewController: UIViewController {
     @objc
     private func shutterButtonTapped(_ sender: UIButton) {
         guard !isCountingDown else { return }
-        countdownLabel.isHidden = false
+        countDownCircleView.isHidden = false
         startCountdown()
     }
 
@@ -124,7 +143,7 @@ class CameraViewController: UIViewController {
             countdown -= 1
             self?.countdownLabel.text = "\(countdown)"
             if countdown == 0 {
-                self?.countdownLabel.isHidden = true
+                self?.countDownCircleView.isHidden = true
                 timer.invalidate()
                 self?.takePhoto()
             }
