@@ -43,6 +43,8 @@ class ResultViewController: UIViewController {
     }
 
     private func setupLayout() {
+        view.backgroundColor = .white
+        
         view.addSubview(resultImageView)
         view.addSubview(bottomView)
         bottomView.addSubview(finishButton)
