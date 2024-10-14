@@ -21,6 +21,25 @@ Image Grayscaleは、カメラで撮影した画像をグレースケールに�
 - AVFoundation
 - SnapKit（レイアウトライブラリ）
 
+## ライブラリ
+このプロジェクトでは、以下のライブラリをSwift Package Manager (SPM) を使用して管理しています。
+
+   - **SnapKit**: 
+     ```
+     https://github.com/SnapKit/SnapKit.git
+     ```
+
+   - **SwiftLint**: 
+     ```
+     https://github.com/realm/SwiftLint.git
+     ```
+
+   - **SwiftFormat**: 
+     ```
+     https://github.com/nicklockwood/SwiftFormat.git
+     ```
+
+
 ## インストール
 1. このリポジトリをクローンします。
 
@@ -29,7 +48,7 @@ Image Grayscaleは、カメラで撮影した画像をグレースケールに�
    ```
    
 2. Xcodeでプロジェクトを開きます。
-3. シミュレーターまたは実機でビルドして実行します。
+3. カメラ機能を使用するため、実機でビルドして実行します。
 
 ## 使い方
 1. アプリを起動します。
