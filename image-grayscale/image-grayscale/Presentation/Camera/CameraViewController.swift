@@ -172,6 +172,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
     ) {
         loadingView.startAnimating()
+        cameraManager.captureSession.stopRunning()
     }
 
     func photoOutput(
