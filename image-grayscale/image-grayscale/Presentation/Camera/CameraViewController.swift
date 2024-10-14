@@ -26,14 +26,14 @@ class CameraViewController: UIViewController {
         button.contentVerticalAlignment = .fill
         button.tintColor = .white
         button.setImage(UIImage(systemName: "camera.circle.fill"), for: .normal)
+        button.backgroundColor = .darkGray.withAlphaComponent(0.1)
         return button
     }()
 
     private let countDownCircleView: UIView = {
         let view = UIView()
         view.isHidden = true
-        view.backgroundColor = .white
-        view.alpha = 0.2
+        view.backgroundColor = .white.withAlphaComponent(0.4)
         view.layer.cornerRadius = Const.circleViewHeight / 2
         view.clipsToBounds = true
         return view
