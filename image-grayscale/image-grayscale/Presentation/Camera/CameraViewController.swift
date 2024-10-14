@@ -74,6 +74,7 @@ class CameraViewController: UIViewController {
     }
 
     private func setupLayout() {
+        view.backgroundColor = .black
         view.addSubview(shutterButton)
 
         view.addSubview(countDownCircleView)
@@ -83,7 +84,7 @@ class CameraViewController: UIViewController {
 
         shutterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-40)
+            $0.bottom.equalToSuperview().offset(-96)
             $0.width.height.equalTo(72)
         }
 
@@ -110,7 +111,7 @@ class CameraViewController: UIViewController {
     private func setupPreviewLayer() {
         let previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
         previewLayer.frame = view.frame
-        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.videoGravity = .resizeAspect
         previewLayer.connection?.videoOrientation = .portrait
 
         view.layer.addSublayer(previewLayer)
