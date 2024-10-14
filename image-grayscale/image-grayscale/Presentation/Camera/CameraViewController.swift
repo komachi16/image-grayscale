@@ -48,6 +48,7 @@ class CameraViewController: UIViewController {
     private let loadingView: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
+        indicator.style = UIActivityIndicatorView.Style.large
         return indicator
     }()
 
@@ -108,8 +109,9 @@ class CameraViewController: UIViewController {
 
     private func setupPreviewLayer() {
         let previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
-        previewLayer.frame = UIScreen.main.bounds
+        previewLayer.frame = view.frame
         previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.connection?.videoOrientation = .portrait
 
         view.layer.addSublayer(previewLayer)
 
@@ -167,14 +169,19 @@ class CameraViewController: UIViewController {
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(
         _ output: AVCapturePhotoOutput,
+        didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
+    ) {
+        loadingView.startAnimating()
+    }
+
+    func photoOutput(
+        _ output: AVCapturePhotoOutput,
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?
     ) {
         guard let imageData = photo.fileDataRepresentation(),
               let image = UIImage(data: imageData)
         else { return }
-
-        loadingView.startAnimating()
 
         let fixedImage = ImageUtil.fixImageOrientation(image)
         let monochromeImage = ImageUtil.applyMonochromeFilter(to: fixedImage)
