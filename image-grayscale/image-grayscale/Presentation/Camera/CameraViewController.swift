@@ -10,11 +10,11 @@ import AVFoundation
 import SnapKit
 
 class CameraViewController: UIViewController {
+    struct Const {
+        static let circleViewHeight = CGFloat(96)
+    }
 
-    private let captureSession = AVCaptureSession()
-
-    private var deviceInput: AVCaptureDeviceInput?
-    private var photoOutput: AVCapturePhotoOutput?
+    private let cameraManager = CameraManager()
     private var previewLayer: AVCaptureVideoPreviewLayer?
 
     private lazy var shutterButton: UIButton = {
@@ -26,12 +26,21 @@ class CameraViewController: UIViewController {
         button.contentVerticalAlignment = .fill
         button.tintColor = .white
         button.setImage(UIImage(systemName: "camera.circle.fill"), for: .normal)
+        button.backgroundColor = .darkGray.withAlphaComponent(0.1)
         return button
+    }()
+
+    private let countDownCircleView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        view.backgroundColor = .white.withAlphaComponent(0.4)
+        view.layer.cornerRadius = Const.circleViewHeight / 2
+        view.clipsToBounds = true
+        return view
     }()
 
     private let countdownLabel: UILabel = {
         let label = UILabel()
-        label.isHidden = true
         label.font = .systemFont(ofSize: 30)
         return label
     }()
@@ -39,11 +48,12 @@ class CameraViewController: UIViewController {
     private let loadingView: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.hidesWhenStopped = true
+        indicator.style = UIActivityIndicatorView.Style.large
         return indicator
     }()
 
     private var isCountingDown: Bool {
-        !countdownLabel.isHidden
+        !countDownCircleView.isHidden
     }
 
     override func viewDidLoad() {
@@ -64,14 +74,23 @@ class CameraViewController: UIViewController {
     }
 
     private func setupLayout() {
+        view.backgroundColor = .black
         view.addSubview(shutterButton)
-        view.addSubview(countdownLabel)
+
+        view.addSubview(countDownCircleView)
+        countDownCircleView.addSubview(countdownLabel)
+
         view.addSubview(loadingView)
 
         shutterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-40)
+            $0.bottom.equalToSuperview().offset(-96)
             $0.width.height.equalTo(72)
+        }
+
+        countDownCircleView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.height.width.equalTo(Const.circleViewHeight)
         }
 
         countdownLabel.snp.makeConstraints {
@@ -83,73 +102,40 @@ class CameraViewController: UIViewController {
     }
 
     private func setupCamera() {
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
-            print("No camera available.")
-            return
-        }
-        setupDeviceInput(device: captureDevice)
-        setupPhotoOutput()
+        cameraManager.setupSession()
         setupPreviewLayer()
 
-        Task.detached { [weak self] in
-            await self?.captureSession.startRunning()
-        }
-    }
-
-    private func setupDeviceInput(device: AVCaptureDevice) {
-        do {
-            deviceInput = try AVCaptureDeviceInput(device: device)
-
-            guard let deviceInput else { return }
-            if captureSession.canAddInput(deviceInput) {
-                captureSession.addInput(deviceInput)
-            }
-        } catch {
-            print("Error setting up camera input: \(error)")
-        }
-    }
-
-    private func setupPhotoOutput() {
-        photoOutput = AVCapturePhotoOutput()
-        if let photoOutput = photoOutput, captureSession.canAddOutput(photoOutput) {
-            captureSession.addOutput(photoOutput)
-        }
+        cameraManager.captureSessionStart()
     }
 
     private func setupPreviewLayer() {
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer?.frame = view.layer.bounds
-        previewLayer?.videoGravity = .resizeAspectFill
+        let previewLayer = AVCaptureVideoPreviewLayer(session: cameraManager.captureSession)
+        previewLayer.frame = view.frame
+        previewLayer.videoGravity = .resizeAspect
+        previewLayer.connection?.videoOrientation = .portrait
 
-        guard let previewLayer else { return }
         view.layer.addSublayer(previewLayer)
 
         view.bringSubviewToFront(shutterButton)
-        view.bringSubviewToFront(countdownLabel)
+        view.bringSubviewToFront(countDownCircleView)
         view.bringSubviewToFront(loadingView)
     }
 
     private func resetCamera() {
-        captureSession.stopRunning()
-        if let deviceInput = deviceInput {
-            captureSession.removeInput(deviceInput)
-        }
-        captureSession.outputs.forEach { output in
-            captureSession.removeOutput(output)
-        }
+        cameraManager.stopCamera()
         previewLayer?.removeFromSuperlayer()
         previewLayer = nil
     }
 
     private func takePhoto() {
-        let settings = AVCapturePhotoSettings()
-        photoOutput?.capturePhoto(with: settings, delegate: self)
+        cameraManager.takePhoto(delegate: self)
     }
 
     @objc
     private func shutterButtonTapped(_ sender: UIButton) {
         guard !isCountingDown else { return }
-        countdownLabel.isHidden = false
+        shutterButton.isEnabled = false
+        countDownCircleView.isHidden = false
         startCountdown()
     }
 
@@ -161,43 +147,11 @@ class CameraViewController: UIViewController {
             countdown -= 1
             self?.countdownLabel.text = "\(countdown)"
             if countdown == 0 {
-                self?.countdownLabel.isHidden = true
+                self?.countDownCircleView.isHidden = true
                 timer.invalidate()
                 self?.takePhoto()
             }
         }
-    }
-
-    private func applyMonochromeFilter(to image: UIImage) -> UIImage {
-        guard let ciImage = CIImage(image: image),
-              let filter = CIFilter(name: "CIColorMonochrome")
-        else {
-            return UIImage()
-        }
-        
-        filter.setValue(ciImage, forKey: kCIInputImageKey)
-        filter.setValue(CIColor(red: 0.0, green: 0.0, blue: 0.0), forKey: kCIInputColorKey)
-        filter.setValue(1.0, forKey: kCIInputIntensityKey)
-
-        let context = CIContext()
-        if let outputImage = filter.outputImage,
-           let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-            return UIImage(cgImage: cgImage)
-        }
-        return image
-    }
-
-    private func fixImageOrientation(_ image: UIImage) -> UIImage {
-        if image.imageOrientation == .up {
-            return image
-        }
-
-        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        image.draw(in: CGRect(origin: .zero, size: image.size))
-        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return normalizedImage ?? image
     }
 
     private func saveImageToCameraRoll(_ image: UIImage) {
@@ -217,6 +171,14 @@ class CameraViewController: UIViewController {
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(
         _ output: AVCapturePhotoOutput,
+        didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings
+    ) {
+        loadingView.startAnimating()
+        cameraManager.captureSession.stopRunning()
+    }
+
+    func photoOutput(
+        _ output: AVCapturePhotoOutput,
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?
     ) {
@@ -224,15 +186,14 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
               let image = UIImage(data: imageData)
         else { return }
 
-        loadingView.startAnimating()
-
-        let fixedImage = fixImageOrientation(image)
-        let monochromeImage = applyMonochromeFilter(to: fixedImage)
+        let fixedImage = ImageUtil.fixImageOrientation(image)
+        let monochromeImage = ImageUtil.applyMonochromeFilter(to: fixedImage)
 
         saveImageToCameraRoll(monochromeImage)
 
         Task { @MainActor in
             loadingView.stopAnimating()
+            shutterButton.isEnabled = true
             let resultVC = ResultViewController()
             resultVC.capturedImage = monochromeImage
             navigationController?.pushViewController(resultVC, animated: true)
