@@ -134,6 +134,7 @@ class CameraViewController: UIViewController {
     @objc
     private func shutterButtonTapped(_ sender: UIButton) {
         guard !isCountingDown else { return }
+        shutterButton.isEnabled = false
         countDownCircleView.isHidden = false
         startCountdown()
     }
@@ -192,6 +193,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         Task { @MainActor in
             loadingView.stopAnimating()
+            shutterButton.isEnabled = true
             let resultVC = ResultViewController()
             resultVC.capturedImage = monochromeImage
             navigationController?.pushViewController(resultVC, animated: true)
